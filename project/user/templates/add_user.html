@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+	<div class="pb-2 mt-4 mb-2 border-bottom page_sub_title">
+      	Add New User
+	</div>
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Add New User</h3>
+			</div>
+			<div class="card-body">
+				<form action="/user/create" method="post">
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="username" id="username" class="form-control" placeholder="username">
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="text" name="email" id="email" class="form-control" placeholder="email">
+					</div>
+					<div class="form-group">
+						<input type="submit" id="submit" value="Add" class="btn float-left login_btn">
+					</div>
+					<div class="float-left form-group input_group error_text login-error-msg-padding">
+						{% if error != '' %}<span> {{ error }} </span>{% endif %}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+	  $('#submit').click(function() {
+		 var username = $('#username').val();
+		 var email = $('#email').val();
+		 var canSubmit = isFormFilled();
+
+		 if(!canSubmit) {
+		 	if(username == '') {
+		 		$('#username').addClass('invalid');
+		 	}
+
+		 	if(email == '') {
+		 		$('#email').addClass('invalid');
+		 	}
+
+		  	return false;
+		 }
+
+		 function isFormFilled() {
+		   var filled = true;
+		   if(username == '' || email == '') {
+			 filled = false;
+		   }
+
+		   return filled;
+		 }
+	  });
+	});
+</script>
+{% endblock %}

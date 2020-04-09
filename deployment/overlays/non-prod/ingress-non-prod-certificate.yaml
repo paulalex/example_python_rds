@@ -1,0 +1,6 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ddc-example-rds-python
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6

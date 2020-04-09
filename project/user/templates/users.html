@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="pb-2 mt-4 mb-2 border-bottom page_sub_title">
+          Current User List
+    </div>
+    <table id="users" class="display" style="width:80%;">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email Address</th>
+                <th>Created On</th>
+                <th>Administrator</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.created }}</td>
+                <td>{{ user.admin }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Username</th>
+                <th>Email Address</th>
+                <th>Created On</th>
+                <th>Administrator</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+flask
+flask-wtf
+Flask-SQLAlchemy
+Flask-Migrate
+sqlalchemy-utils
+python-dotenv
+pytest
+psycopg2-binary

@@ -1,0 +1,17 @@
+bases:
+  - ../../base
+patchesStrategicMerge:
+  - ingress-dev-certificate.yaml
+  - iam-service-account.yaml
+namespace: NAMESPACE_PLACEHOLDER
+configMapGenerator:
+- name: ddc-example-rds-python-configmap
+  behavior: merge
+  literals:
+    - DATABASE_URL=DB_URL_PLACEHOLDER
+    - DATABASE_ENGINE=DB_ENGINE_PLACEHOLDER
+    - DATABASE_PORT=DB_PORT_PLACEHOLDER
+    - DATABASE_NAME=DB_NAME_PLACEHOLDER
+    - DATABASE_USER=DB_USER_PLACEHOLDER
+    - DATABASE_PASSWORD=DB_PWD_PLACEHOLDER
+    - ENVIRONMENT=DEV_K8S

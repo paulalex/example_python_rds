@@ -1,0 +1,16 @@
+.dockerignore
+.gitignore
+.pytest_cache
+*pycache*
+*.env
+*.dockerfile
+*.md
+*.pyc
+*.log
+*.git
+*.sqlite
+*.xml
+run.py
+run.sh
+Dockerfile
+Jenkinsfile

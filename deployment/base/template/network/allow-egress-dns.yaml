@@ -1,0 +1,21 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: ddc-example-rds-python
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+      # allow DNS resolution and RDS\Postgres
+    ports:
+      - port: 53
+        protocol: UDP
+      - port: 53
+        protocol: TCP

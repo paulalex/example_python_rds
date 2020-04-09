@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ddc-example-rds-python
+  namespace: NAMESPACE_PLACEHOLDER
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/tags: Service=Texas
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+  labels:
+    app: ddc-example-rds-python
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /static/*
+            backend:
+              serviceName: ddc-example-rds-python
+              servicePort: 80
+          - path: /user/*
+            backend:
+              serviceName: ddc-example-rds-python
+              servicePort: 80
+          - path: /*
+            backend:
+              serviceName: hello-service
+              servicePort: 80

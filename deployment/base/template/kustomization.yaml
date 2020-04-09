@@ -1,0 +1,26 @@
+resources:
+- namespace.yaml
+- iam-service-account.yaml
+- deployment.yaml
+- service.yaml
+- template/ingress.yaml
+- template/network/allow-external-ingress.yaml
+- template/network/default-deny-ingress.yaml
+- template/network/allow-egress-dns.yaml
+- template/network/allow-egress-rds.yaml
+- template/network/allow-egress-s3.yaml
+
+configMapGenerator:
+- name: ddc-example-rds-python-configmap
+  literals:
+    - DATABASE_URL=paoc-test-app.ckpj0be0i8x1.eu-west-2.rds.amazonaws.com
+    - DATABASE_ENGINE=postgres
+    - DATABASE_PORT=5432
+    - DATABASE_NAME=test-app-users
+    - DATABASE_USER=postgres
+    - DATABASE_PASSWORD=password123
+    - ENVIRONMENT=DEV_K8S
+
+images:
+- name: 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python
+  newTag: IMAGE_TAG

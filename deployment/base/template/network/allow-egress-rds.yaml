@@ -1,0 +1,15 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ddc-example-rds-python-postgres-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: ddc-example-rds-python
+  policyTypes:
+  - Egress
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 5432

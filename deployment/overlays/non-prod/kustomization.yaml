@@ -1,0 +1,16 @@
+bases:
+  - ../../../base
+patchesStrategicMerge:
+  - ingress-non-prod-certificate.yaml
+namespace: ddc-example-rds-python-master
+configMapGenerator:
+- name: ddc-example-rds-python-configmap
+  behavior: merge
+  literals:
+    - DATABASE_URL=texas-example-rds-python.cqger35bxcwy.eu-west-2.rds.amazonaws.com
+    - DATABASE_ENGINE=postgres
+    - DATABASE_PORT=5432
+    - DATABASE_NAME=test-app-users
+    - DATABASE_USER=postgres
+    - DATABASE_PASSWORD=texas1234
+    - ENVIRONMENT=NONPROD_K8S

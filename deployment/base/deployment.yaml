@@ -1,0 +1,155 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ddc-example-rds-python
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ddc-example-rds-python
+    spec:
+      serviceAccountName: example-python-rds-iam-sa
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - ddc-example-rds-python
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - image: 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:IMAGE_TAG
+          name: ddc-example-rds-python
+          imagePullPolicy: Always
+          securityContext:
+            runAsUser: 0
+          resources:
+            requests:
+              cpu: 100m # 10% of 1 core
+              memory: 35Mi
+          envFrom:
+            - configMapRef:
+                name: ddc-example-rds-python-configmap
+          ports:
+            - containerPort: 5000
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - hello
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: myvol
+              mountPath: /usr/share/nginx/html
+          resources:
+            requests:
+              cpu: 100m # 10% of 1 core
+              memory: 1.5Mi
+      # These containers are run during pod initialization
+      initContainers:
+        - name: alpine
+          image: alpine
+          command:
+            - sh
+            - "-c"
+            - |
+              mkdir -p /init-cont && \
+              touch "/init-cont/index.html" && \
+              echo "Hello from micro-service two" > "/init-cont/index.html"
+              sleep 30
+          volumeMounts:
+            - name: myvol
+              mountPath: "/init-cont"
+      volumes:
+        - name: myvol
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  labels:
+    app: hello-service
+spec:
+  type: NodePort
+  ports:
+  - name: hello-service
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: hello
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: python-rds-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ddc-example-rds-python
+  minReplicas: 3
+  maxReplicas: 30
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageValue: 39Mi
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hello
+  minReplicas: 3
+  maxReplicas: 30
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageValue: 1.9Mi

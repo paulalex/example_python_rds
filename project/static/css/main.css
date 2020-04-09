@@ -1,0 +1,98 @@
+.padded_body {
+    padding: 1px;
+    background-color:  #C8C8C8;
+}
+
+.container {
+    height: 100%;
+    align-content: center;
+}
+
+.navbar-brand {
+    color: #FD5F00 !important;
+}
+
+.nav-link {
+    color: #FD5F00 !important;
+}
+
+.page_sub_title {
+    font-weight: bold;
+    color: #FD5F00 !important;
+}
+
+.card {
+    height: 300px;
+    width: 450px;
+    margin-bottom: auto;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.card-header h3 {
+    color: #FD5F00;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FD5F00;
+    color: black;
+    border:0 !important;
+}
+
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.login_btn{
+    color: black;
+    background-color: #FD5F00;
+    width: 100px;
+}
+
+.login_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.invalid {
+    border-color: red !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    border-width: 2px;
+}
+
+.error_text {
+    color: #FD5F00;
+}
+
+.dataTables_length {
+    color: #FD5F00 !important;
+}
+
+.dataTables_filter {
+    color: #FD5F00 !important;
+}
+
+thead {
+    color: #FD5F00 !important;
+}
+
+tfoot {
+    color: #FD5F00 !important;
+}
+
+div #users_info {
+    font-weight: bold;
+    color: #FD5F00 !important;
+}
+
+a #users_previous {
+    font-weight: bold;
+    color: #FD5F00 !important;
+}
+
+div #users_paginate a {
+    font-weight: bold;
+    color: #FD5F00 !important;
+}
