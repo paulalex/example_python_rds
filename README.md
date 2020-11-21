@@ -1,4 +1,4 @@
-Welcome to the Texas Example-Python-RDS Example application
+Python-RDS Example application
 =============================================================
 
 This repository contains a sample `Flask` application running with a `uwsgi` server and
@@ -33,7 +33,7 @@ Quick start
 
 ## Clone the repository
 
-`https://gitlab.mgmt.texasplatform.uk/examples/example-python-rds.git`
+`https://github.com/paulalex/example_python_rds/example-python-rds.git`
 
 Local Development
 =================
@@ -55,29 +55,29 @@ the runtime image locally.
 
 ## Build image locally, tag and deploy to ECR
 
-• `. texas-mfa-clear`
+• `. mfa-clear`
 
-• `texas-mfa` (select the live management environment)
+• `mfa` Using awesume alias or custom script
 
 • `aws ecr get-login --no-include-email`
 
 • `docker login -u AWS -p <token>`
 
-• `docker build -t 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:build -f pipeline-build.dockerfile .`
+• `docker build -t x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:build -f pipeline-build.dockerfile .`
 
-• `docker push 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:build`
+• `docker push x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:build`
 
-• `docker build -t 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:dev -f pipeline-runtime.dockerfile .`
+• `docker build -t x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:dev -f pipeline-runtime.dockerfile .`
 
-• `docker push 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:dev`
+• `docker push x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:dev`
 
 ## Run container locally but use sqlite
 
-`docker run -d -p5000:5000 -e "ENVIRONMENT=LOCAL" 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:dev`
+`docker run -d -p5000:5000 -e "ENVIRONMENT=LOCAL" x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:dev`
 
 ## Run container locally but use RDS
 
-`docker run -d -p5000:5000 --env-file=dev.env 461183108257.dkr.ecr.eu-west-2.amazonaws.com/texas-example-rds-python:dev`
+`docker run -d -p5000:5000 --env-file=dev.env x.dkr.ecr.eu-west-2.amazonaws.com/example-rds-python:dev`
 
 ## Database Migration
 
@@ -106,7 +106,7 @@ run against the `Flask` application using a `sqlite` database. To run the test s
 When the application is deployed via `Jenkins` a test container is build first (see `pipeline-test.dockerfile`) and 
 tests run inside this container, you can simulate this locally with the command below:
 
-• `docker build -t texas-example-rds-python:test -f pipeline-test.dockerfile .`
+• `docker build -t example-rds-python:test -f pipeline-test.dockerfile .`
 
 Local Deployment to kubernetes to test config
 ==============================================
@@ -121,9 +121,3 @@ can be found in the `deployment` folder in the root of the project.
 For example:
 
 `/deploy.sh dev master dev paoc-test-app.ckpj0be0i8x1.eu-west-2.rds.amazonaws.com postgres 5432 test-app-users postgres password123`
-
-Gitlab is configured to run a pipeline build when changes are pushed remotely (see below).
-
-# Jenkins Gitlab Webhook Configuration
-
-See [this](https://confluence.digital.nhs.uk/display/TEX/GitLab+Webhook+to+Jenkins) confluence page for webhook configuration between Jenkins and Gitlab.
