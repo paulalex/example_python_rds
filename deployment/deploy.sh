@@ -79,7 +79,7 @@ deploy() {
     info
 }
 
-OVERLAY=${1?You must pass in the name of the environment to deploy texas-example-rds-python into [dev, test, non-prod, prod]}
+OVERLAY=${1?You must pass in the name of the environment to deploy example-rds-python into [dev, test, non-prod, prod]}
 BRANCH_ID=${2?You must specify the branch name you want to deploy}
 SUPPLIED_IMAGE_TAG=${3?You must specify the tag of the image you want to deploy}
 DATABASE_URL=${4?You must specify the database endpoint}
@@ -88,7 +88,7 @@ DATABASE_PORT=${6?You must specify the database port}
 DATABASE_NAME=${7?You must specify the database name}
 DATABASE_USER=${8?You must specify the database username}
 DATABASE_PASSWORD=${9?You must specify the database password}
-NAMESPACE="ddc-example-rds-python-${BRANCH_ID}"
+NAMESPACE="example-rds-python-${BRANCH_ID}"
 FOLDER="overlays/${OVERLAY}/"
 
 if [[ $3 == 'debug' ]]; then
